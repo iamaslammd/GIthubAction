@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: ["master"]
+    branches: [ "master" ]
   pull_request:
-    branches: ["master"]
+    branches: [ "master" ]
   workflow_dispatch:
 
 jobs:
@@ -14,11 +14,19 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up JDK  11.0.8+10
+      - name: Set up JDK 1.8
         uses: actions/setup-java@v3
         with:
-          java-version: " 11.0.8+10"
-          distribution: "adopt"
+          java-version: '1.8'
+          distribution: 'adopt'
 
       - name: Build with Maven
         run: mvn clean install
+
+      - name: Deploy to S3
+        env:
+          AWS_ACCESS_KEY_ID: ${{ AKIARDYSXRDHMTVTNC7U }}
+          AWS_SECRET_ACCESS_KEY: ${{ 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 }}
+          AWS_REGION: 'us-east-1'
+        run: |
+          aws s3 cp target/my-java-app.jar s3://my-bucket/my-java-app.jar
