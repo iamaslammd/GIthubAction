@@ -22,11 +22,3 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean install
-
-      - name: Deploy to S3
-        env:
-          AWS_ACCESS_KEY_ID: ${{ AKIARDYSXRDHMTVTNC7U }}
-          AWS_SECRET_ACCESS_KEY: ${{ 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 }}
-          AWS_REGION: 'us-east-1'
-        run: |
-          aws s3 cp target/my-java-app.jar s3://my-bucket/my-java-app.jar
